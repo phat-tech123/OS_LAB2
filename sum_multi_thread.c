@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    pthread_t* threads = malloc(numThreads * sizeof(pthread_t));
+    pthread_t* thread = malloc(numThreads * sizeof(pthread_t));
     ThreadData* threadData = malloc(numThreads * sizeof(ThreadData));
 
     unsigned long long* results = malloc(numThreads * sizeof(unsigned long long));
@@ -37,18 +37,18 @@ int main(int argc, char* argv[]) {
         threadData[i].k = i;
         threadData[i].result = &results[i];
 
-        pthread_create(&threads[i], NULL, sum_partial, &threadData[i]);
+        pthread_create(&thread[i], NULL, sum_partial, &threadData[i]);
     }
 
     unsigned long long total_sum = 0;
     for (int i = 0; i < numThreads; i++) {
-        pthread_join(threads[i], NULL);
+        pthread_join(thread[i], NULL);
         total_sum += results[i];
     }
 
     printf("%llu\n", total_sum);
 
-    free(threads);
+    free(thread);
     free(threadData);
     free(results);
 
