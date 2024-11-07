@@ -75,9 +75,18 @@ int main(int argc, char* argv[]){
 			wait(NULL);
 			double avg_rating = (shm[0] + shm[2])/(shm[1] + shm[3]);
 			printf("%lf\n", avg_rating);
+			if(shmdt(shm) == -1){
+				perror("shmdt\n");
+				return 1;
+			}
+			if(shmctl(shmid, IPC_RMID, 0) == -1){
+				perror("shmctl");
+				return 1;
+			}
+			return 0;
 		}
 	}
-
+	
 
 }
 
