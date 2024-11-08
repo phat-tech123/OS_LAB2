@@ -23,7 +23,7 @@ int main(void){
 	
 	if((msgid = msgget(MSG_KEY, PERMS | IPC_CREAT)) == -1){
 		perror("msgget\n");
-		exit(1); 	
+		return 1; 	
 	}
 	printf("message queue: ready to send message.\n");
 	printf("Enter lines of text, D to quit:\n");
